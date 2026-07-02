@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ashitha.p — AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E11;
+    --bg-2:#11151A;
+    --bg-3:#161B21;
+    --line:#232A32;
+    --text:#D8DEE4;
+    --text-dim:#7C8894;
+    --text-faint:#4C555F;
+    --green:#4ADE80;
+    --green-dim:#2E7D53;
+    --amber:#F0B429;
+    --blue:#5EA3E8;
+    --pink:#E27DBB;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+    font-size:14.5px;
+    line-height:1.7;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--green-dim);color:#fff;}
+  .wrap{max-width:880px;margin:0 auto;padding:0 28px;}
+
+  header.top{position:sticky;top:0;z-index:30;background:rgba(11,14,17,0.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;max-width:880px;margin:0 auto;}
+  .nav .prompt{color:var(--green);font-size:13.5px;}
+  .nav .prompt span{color:var(--text-dim);}
+  .nav ul{list-style:none;display:flex;gap:22px;margin:0;padding:0;}
+  .nav a{font-size:13px;color:var(--text-dim);}
+  .nav a:hover{color:var(--green);}
+  .nav a::before{content:"./";color:var(--text-faint);}
+
+  .term-bar{display:flex;gap:6px;padding:10px 14px;background:var(--bg-3);border:1px solid var(--line);border-bottom:none;border-radius:6px 6px 0 0;}
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.r{background:#EF4444;} .dot.y{background:#F0B429;} .dot.g{background:#4ADE80;}
+
+  .hero{padding:70px 0 56px;}
+  .term-window{border:1px solid var(--line);border-radius:0 0 6px 6px;background:var(--bg-2);padding:28px 30px;}
+  .term-line{margin:0 0 6px;color:var(--text-dim);}
+  .term-line .k{color:var(--blue);}
+  .term-line .s{color:var(--amber);}
+  .cursor{display:inline-block;width:8px;height:16px;background:var(--green);vertical-align:middle;animation:blink 1.1s steps(1) infinite;margin-left:2px;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion:reduce){.cursor{animation:none;}}
+
+  h1.name{
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:clamp(34px,5.5vw,52px);
+    margin:22px 0 8px;
+    color:#fff;
+    letter-spacing:-0.01em;
+  }
+  .role-line{font-size:16px;color:var(--green);margin:0 0 20px;}
+  .hook{max-width:600px;color:var(--text-dim);font-size:14.5px;margin:0 0 26px;}
+  .hook b{color:var(--text);font-weight:600;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border:1px solid var(--line);border-radius:6px;font-size:13px;color:var(--text);transition:all .15s ease;}
+  .btn.solid{background:var(--green);color:#0B0E11;border-color:var(--green);font-weight:600;}
+  .btn:hover{border-color:var(--green);color:var(--green);}
+  .btn.solid:hover{opacity:0.88;color:#0B0E11;}
+
+  section{padding:56px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:32px;}
+  .sec-tag{color:var(--text-faint);font-size:13px;}
+  .sec-title{font-family:'Inter',sans-serif;font-size:22px;font-weight:600;color:#fff;margin:0;}
+
+  .about-body{max-width:660px;color:var(--text-dim);font-size:14.5px;}
+  .about-body p{margin:0 0 14px;}
+  .about-body code{color:var(--green);}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:30px;border-radius:6px;overflow:hidden;}
+  .stat{background:var(--bg-2);padding:18px;}
+  .stat .num{font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:var(--green);}
+  .stat .lbl{font-size:11px;color:var(--text-faint);margin-top:4px;}
+
+  .exp-item{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid var(--line);}
+  .exp-item:last-child{border-bottom:none;}
+  .exp-date{font-size:11.5px;color:var(--text-faint);padding-top:3px;}
+  .exp-co{font-family:'Inter',sans-serif;font-size:17px;font-weight:600;color:#fff;margin:0 0 2px;}
+  .exp-role{color:var(--green);font-size:13px;margin:0 0 10px;}
+  .exp-item ul{margin:0;padding-left:18px;color:var(--text-dim);font-size:13.5px;}
+  .exp-item li{margin-bottom:6px;}
+  .exp-item li::marker{color:var(--text-faint);}
+  .tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .tag{font-size:10.5px;background:var(--bg-3);border:1px solid var(--line);padding:3px 9px;border-radius:20px;color:var(--text-dim);}
+
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:680px){.proj-grid{grid-template-columns:1fr;} .exp-item{grid-template-columns:1fr;} .stat-row{grid-template-columns:1fr 1fr;}}
+  .proj-card{border:1px solid var(--line);border-radius:8px;padding:22px;background:var(--bg-2);transition:border-color .15s ease;}
+  .proj-card:hover{border-color:var(--green-dim);}
+  .proj-status{font-size:10px;text-transform:uppercase;letter-spacing:0.05em;color:var(--amber);margin-bottom:10px;display:block;}
+  .proj-title{font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:#fff;margin:0 0 8px;}
+  .proj-desc{font-size:13px;color:var(--text-dim);margin:0 0 14px;}
+  .proj-link{font-size:12px;color:var(--blue);}
+  .proj-link:hover{color:var(--green);}
+
+  .ach-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:680px){.ach-grid{grid-template-columns:1fr;}}
+  .ach-item{display:flex;gap:12px;border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--bg-2);}
+  .ach-icon{color:var(--amber);font-size:16px;padding-top:1px;}
+  .ach-text .t{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--text);margin:0 0 2px;}
+  .ach-text .d{font-size:12px;color:var(--text-faint);margin:0;}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  @media (max-width:680px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-group h4{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);margin:0 0 12px;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{font-size:12px;padding:5px 11px;border:1px solid var(--line);border-radius:5px;color:var(--text-dim);background:var(--bg-2);}
+
+  footer{padding:56px 0 40px;}
+  .foot-title{font-family:'Inter',sans-serif;font-size:24px;font-weight:600;color:#fff;margin:0 0 14px;max-width:440px;}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-top:6px;}
+  .foot-links a{color:var(--blue);}
+  .foot-links a:hover{color:var(--green);}
+  .foot-note{font-size:11px;color:var(--text-faint);margin-top:36px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="nav">
+    <span class="prompt">guest@ashitha<span>:~$</span></span>
+    <ul>
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#achievements">achievements</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="wrap">
+
+  <section class="hero" style="border-top:none;">
+    <div class="term-bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+    <div class="term-window">
+      <p class="term-line"><span class="k">$</span> whoami</p>
+      <p class="term-line">ashitha_p, <span class="s">AI Engineer</span>, Kochi, Kerala</p>
+      <p class="term-line"><span class="k">$</span> status</p>
+      <p class="term-line">open to full time roles · Bengaluru / Chennai / Hyderabad / Kochi<span class="cursor"></span></p>
+    </div>
+
+    <h1 class="name">Ashitha P</h1>
+    <p class="role-line">AI Engineer, LLM pipelines, RAG systems, computer vision</p>
+    <p class="hook"><b>Fresher by designation, production level by experience.</b> I've spent the last year plus building AI systems that run on messy real data in real production, not just notebooks. Right now I'm at Aarogya Sarthi, building the AI layer that reads medical lab reports so people don't have to.</p>
+    <div class="cta-row">
+      <a class="btn solid" href="mailto:pallathashitha@gmail.com">email me →</a>
+      <a class="btn" href="https://github.com/ashithapallath" target="_blank" rel="noopener">github</a>
+      <a class="btn" href="https://linkedin.com/in/ashitha-pallath" target="_blank" rel="noopener">linkedin</a>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><span class="sec-tag">01 //</span><h2 class="sec-title">about</h2></div>
+    <div class="about-body">
+      <p>I finished my Integrated M.Sc. in Computer Science <code>(AI &amp; Data Science)</code> at CUSAT, Kochi in 2026, with a CGPA of 8.2. What I actually enjoy is taking messy real world data, things like scanned lab reports, invoices, camera feeds, and figuring out how to turn it into something structured that people can actually query and rely on.</p>
+      <p>That thread runs through everything I've worked on so far. I built an LLM based RAG system for lab reports at Aarogya Sarthi, a VLM and YOLO invoice parser at Pearlsoft, a CNN ViT hybrid for medical image segmentation at NIT Calicut, and embedded object detection at KPIT. What I care about most is finishing the loop. I want to ship things, not just prototype them.</p>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="num">4</div><div class="lbl">roles: production + research</div></div>
+      <div class="stat"><div class="num">8.2</div><div class="lbl">cgpa, cusat</div></div>
+      <div class="stat"><div class="num">1+</div><div class="lbl">yrs shipping ai in prod</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">shipped / open-source projects</div></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><span class="sec-tag">02 //</span><h2 class="sec-title">experience</h2></div>
+
+    <div class="exp-item">
+      <div class="exp-date">Nov 2025 — present</div>
+      <div>
+        <p class="exp-co">Aarogya Sarthi</p>
+        <p class="exp-role">AI Engineer, Part Time · Remote</p>
+        <ul>
+          <li>Built and deployed an end to end AI pipeline for medical lab report processing using LLMs and RAG, handling real world PDF data with intelligent querying.</li>
+          <li>Designed a RAG system using embeddings and ChromaDB, with structured lab data stored in PostgreSQL (JSONB).</li>
+          <li>Integrated the pipeline with AWS S3, Flask APIs, Docker, and a Go backend for production deployment.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">ChromaDB</span><span class="tag">AWS S3</span><span class="tag">Docker</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">May 2025 — Aug 2025</div>
+      <div>
+        <p class="exp-co">Pearlsoft Technologies LLP</p>
+        <p class="exp-role">Software Engineer Trainee (AI) · Kochi, Kerala</p>
+        <ul>
+          <li>Built and deployed Visiscan, a document parser using a VLM and YOLO for invoice classification, integrated into Odoo ERP.</li>
+          <li>Automated document ingestion from Google Drive and email pipelines using Celery.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">VLM</span><span class="tag">YOLO</span><span class="tag">Celery</span><span class="tag">Odoo API</span><span class="tag">Docker</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">May 2024 — Jul 2024</div>
+      <div>
+        <p class="exp-co">NIT Calicut</p>
+        <p class="exp-role">Research Intern · Calicut, Kerala</p>
+        <ul>
+          <li>Developed an unsupervised skin cancer detection system using spectral clustering.</li>
+          <li>Implemented a hybrid CNN, Vision Transformer architecture for lesion segmentation, improving accuracy by 15% with GAN based augmentation.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">ViT</span><span class="tag">GANs</span></div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jun 2023 — Jul 2023</div>
+      <div>
+        <p class="exp-co">KPIT Technologies Ltd</p>
+        <p class="exp-role">Machine Learning Intern · Kochi, Kerala</p>
+        <ul>
+          <li>Built a Yocto based Linux kernel for a Raspberry Pi automotive monitoring system.</li>
+          <li>Developed real time object detection with TensorFlow Lite and NNStreamer, achieving 98% accuracy.</li>
+        </ul>
+        <div class="tag-row"><span class="tag">Yocto Linux</span><span class="tag">TensorFlow Lite</span><span class="tag">GStreamer</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><span class="sec-tag">03 //</span><h2 class="sec-title">projects</h2></div>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <span class="proj-status">shipped · chrome extension</span>
+        <p class="proj-title">Image splicing detection</p>
+        <p class="proj-desc">A CNN model that spots digitally forged images by analyzing frequency domain patterns. I trained it on the CASIA dataset and then took it further by packaging it into a Chrome extension, so anyone can right click a photo and check if it's been tampered with.</p>
+        <a class="proj-link" href="https://github.com/ashithapallath" target="_blank" rel="noopener">github.com/ashithapallath →</a>
+      </div>
+
+      <div class="proj-card">
+        <span class="proj-status">hackathon winner</span>
+        <p class="proj-title">Drive.AI</p>
+        <p class="proj-desc">Built with a team at HackAthena 2024. It pairs YOLOv5 object detection with GPT-4 reasoning to read traffic scenes and give drivers voice guided safety alerts in real time. It won the Theme Prize for Road Safety, judged live at the event.</p>
+        <a class="proj-link" href="https://github.com/ashithapallath" target="_blank" rel="noopener">github.com/ashithapallath →</a>
+      </div>
+
+      <div class="proj-card">
+        <span class="proj-status">nlp · classifier</span>
+        <p class="proj-title">Abusive Malayalam comment detection</p>
+        <p class="proj-desc">A classifier that flags abusive comments written in Malayalam. I compared a MuRIL transformer against classical models like SVM and XGBoost, and measured everything on precision, recall, and F1 to see what actually held up on real world text.</p>
+        <a class="proj-link" href="https://github.com/ashithapallath" target="_blank" rel="noopener">github.com/ashithapallath →</a>
+      </div>
+
+      <div class="proj-card">
+        <span class="proj-status">data science · mmm</span>
+        <p class="proj-title">Marketing mix modeling</p>
+        <p class="proj-desc">I dug into two years of weekly marketing data to figure out how much paid media, email and SMS, pricing, and promotions actually move revenue. Used time series cross validation throughout so the results weren't quietly cheating by peeking into the future.</p>
+        <a class="proj-link" href="https://github.com/ashithapallath" target="_blank" rel="noopener">github.com/ashithapallath →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="achievements">
+    <div class="sec-head"><span class="sec-tag">04 //</span><h2 class="sec-title">achievements</h2></div>
+    <div class="ach-grid">
+      <div class="ach-item">
+        <span class="ach-icon">▲</span>
+        <div class="ach-text">
+          <p class="t">HackAthena 2024 — Theme Prize, Road Safety</p>
+          <p class="d">Won for Drive.AI, a YOLOv5 + GPT-4 traffic safety system</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">◆</span>
+        <div class="ach-text">
+          <p class="t">Mentor, Tink-Her-Hack 24</p>
+          <p class="d">Organized by TinkerHub (2025)</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">◆</span>
+        <div class="ach-text">
+          <p class="t">Organiser, MAKE-A-TON 7.0 Hackathon</p>
+          <p class="d">One of three core organisers (2024)</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">■</span>
+        <div class="ach-text">
+          <p class="t">Hosted AI/SRE Track, DevOpsDays Kerala</p>
+          <p class="d">2024</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">●</span>
+        <div class="ach-text">
+          <p class="t">GitHub Constellation Attendee</p>
+          <p class="d">2024</p>
+        </div>
+      </div>
+      <div class="ach-item">
+        <span class="ach-icon">●</span>
+        <div class="ach-text">
+          <p class="t">Core Volunteer, ACD Community Day</p>
+          <p class="d">2023</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="sec-tag">05 //</span><h2 class="sec-title">skills</h2></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h4>ai &amp; genai</h4>
+        <div class="chip-row">
+          <span class="chip">LLMs</span><span class="chip">RAG</span><span class="chip">LangChain</span><span class="chip">LangGraph</span>
+          <span class="chip">Computer Vision</span><span class="chip">Prompt Engineering</span><span class="chip">YOLO</span><span class="chip">Vision Transformers</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>infra &amp; deployment</h4>
+        <div class="chip-row">
+          <span class="chip">Docker</span><span class="chip">AWS S3</span><span class="chip">FastAPI</span><span class="chip">Flask</span>
+          <span class="chip">PostgreSQL</span><span class="chip">Git / CI-CD</span><span class="chip">Celery</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>vector &amp; data</h4>
+        <div class="chip-row">
+          <span class="chip">ChromaDB</span><span class="chip">FAISS</span><span class="chip">Pinecone</span><span class="chip">SQL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h4>languages</h4>
+        <div class="chip-row">
+          <span class="chip">Python</span><span class="chip">C++</span><span class="chip">MATLAB</span><span class="chip">R</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <p class="foot-title">If you're building something and need an AI engineer who actually ships instead of just demoing, let's talk.</p>
+    <div class="foot-links">
+      <a href="mailto:pallathashitha@gmail.com">pallathashitha@gmail.com</a>
+      <a href="tel:+919633680095">+91 9633680095</a>
+      <a href="https://github.com/ashithapallath" target="_blank" rel="noopener">github</a>
+      <a href="https://linkedin.com/in/ashitha-pallath" target="_blank" rel="noopener">linkedin</a>
+    </div>
+    <p class="foot-note">Kochi, Kerala, India — last updated July 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>
